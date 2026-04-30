@@ -15,8 +15,8 @@ const marked = new Marked(
 // Add custom renderer to fix image paths
 marked.use({
   renderer: {
-    image(href, title, text) {
-      const fixedHref = href.replace('../images/', 'images/');
+    image({ href, title, text }) {
+      const fixedHref = href ? href.replace('../images/', 'images/') : '';
       return `<img src="${fixedHref}" alt="${text || ''}" title="${title || ''}" style="max-width:100%; border-radius:12px; margin: 1rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">`;
     }
   }
