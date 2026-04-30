@@ -328,3 +328,42 @@ body {
   color: var(--text-secondary);
   font-style: italic;
 }
+
+/* Purchase CTA Styling */
+.purchase-cta {
+  margin: 4rem 0;
+  padding: 3rem;
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.05) 0%, rgba(0, 113, 227, 0.1) 100%);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.purchase-cta h2 {
+  margin-top: 0;
+  border-bottom: none;
+  font-size: 1.8rem;
+}
+
+.purchase-cta p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.buy-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: var(--primary-color);
+  color: white !important;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+}
+
+.buy-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 113, 227, 0.2);
+  text-decoration: none !important;
+}

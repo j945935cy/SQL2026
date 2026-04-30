@@ -47,3 +47,20 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* Table of Contents Styling (Simplified for EPUB Compatibility) */
+nav ol, 
+.toc ol {
+  list-style-type: none;
+  padding-left: 0.5em;
+}
+
+nav li, 
+.toc li {
+  margin-bottom: 0.4em;
+}
+
+nav a,
+.toc a {
+  font-weight: 500;
+}

@@ -29,10 +29,7 @@ const chapters = [
   { id: '03', title: '第 03 章：條件篩選 WHERE', path: 'chapters/03-條件篩選WHERE.md' },
   { id: '04', title: '第 04 章：排序與限制', path: 'chapters/04-排序與限制.md' },
   { id: '05', title: '第 05 章：聚合函數與分組', path: 'chapters/05-聚合函數與分組.md' },
-  { id: '06', title: '第 06 章：多表關聯 JOIN', path: 'chapters/06-多表關聯JOIN.md' },
-  { id: '07', title: '第 07 章：子查詢', path: 'chapters/07-子查詢.md' },
-  { id: '08', title: '第 08 章：新增修改刪除', path: 'chapters/08-新增修改刪除.md' },
-  { id: '09', title: '第 09 章：建立與管理表格', path: 'chapters/09-建立與管理表格.md' },
+  // 試閱版僅開放前 5 章
 ];
 
 let currentChapterIndex = 0;
@@ -123,7 +120,11 @@ async function fetchAndRender(path, title) {
   try {
     const response = await fetch(path);
     if (!response.ok) throw new Error('無法載入文件');
-    const md = await response.text();
+    let md = await response.text();
+    
+    // 移除所有 Emoji 符號 (Kimoji)
+    md = md.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}\u{1F191}-\u{1F251}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{1F170}-\u{1F171}\u{1F17E}-\u{1F17F}\u{1F18E}\u{1F300}-\u{1F5FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+
     markdownContentEl.innerHTML = marked.parse(md);
     
     // Smooth fade in
