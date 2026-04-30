@@ -24,6 +24,7 @@ marked.use({
 });
 
 const chapters = [
+  { id: 'welcome', title: '👋 歡迎閱讀', path: 'welcome.md' },
   { id: '01', title: '第 01 章：資料庫簡介', path: 'chapters/01-資料庫簡介.md' },
   { id: '02', title: '第 02 章：基本查詢 SELECT', path: 'chapters/02-基本查詢SELECT.md' },
   { id: '03', title: '第 03 章：條件篩選 WHERE', path: 'chapters/03-條件篩選WHERE.md' },
@@ -34,17 +35,21 @@ const chapters = [
 
 let currentChapterIndex = 0;
 
-const chapterListEl = document.getElementById('chapter-list');
-const markdownContentEl = document.getElementById('markdown-content');
-const currentTitleEl = document.getElementById('current-title');
-const prevBtn = document.getElementById('prev-btn');
-const nextBtn = document.getElementById('next-btn');
-const themeToggle = document.getElementById('theme-toggle');
-const menuToggle = document.getElementById('menu-toggle');
-const sidebar = document.querySelector('.sidebar');
+let chapterListEl, markdownContentEl, currentTitleEl, prevBtn, nextBtn, themeToggle, menuToggle, sidebar;
 
 // Initialize Navigation
 function initNav() {
+  chapterListEl = document.getElementById('chapter-list');
+  markdownContentEl = document.getElementById('markdown-content');
+  currentTitleEl = document.getElementById('current-title');
+  prevBtn = document.getElementById('prev-btn');
+  nextBtn = document.getElementById('next-btn');
+  themeToggle = document.getElementById('theme-toggle');
+  menuToggle = document.getElementById('menu-toggle');
+  sidebar = document.querySelector('.sidebar');
+
+  if (!chapterListEl || !markdownContentEl) return;
+
   chapters.forEach((chapter, index) => {
     const li = document.createElement('li');
     const a = document.createElement('a');
@@ -111,7 +116,18 @@ async function loadContent(index) {
   await fetchAndRender(chapter.path, chapter.title);
   updateNavButtons();
   window.scrollTo(0, 0);
+  updateProgress();
 }
+
+function updateProgress() {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+  const progressBar = document.getElementById("progress-bar");
+  if (progressBar) progressBar.style.width = scrolled + "%";
+}
+
+window.onscroll = function() { updateProgress() };
 
 async function fetchAndRender(path, title) {
   markdownContentEl.innerHTML = '<div class="loading-state">載入中...</div>';
@@ -138,30 +154,45 @@ async function fetchAndRender(path, title) {
   }
 }
 
-function updateNavButtons() {
-  prevBtn.disabled = currentChapterIndex === 0;
-  nextBtn.disabled = currentChapterIndex === chapters.length - 1;
-}
-
-prevBtn.addEventListener('click', () => loadContent(currentChapterIndex - 1));
-nextBtn.addEventListener('click', () => loadContent(currentChapterIndex + 1));
-
-// Theme Toggle
-themeToggle.addEventListener('click', () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-});
-
-// Mobile Menu
-menuToggle.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
-});
-
 // Initialize
-const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-document.documentElement.setAttribute('data-theme', savedTheme);
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('App initializing...');
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
 
-initNav();
-loadContent(0);
+  // Make Sidebar Header Clickable
+  const sidebarHeader = document.querySelector('.sidebar-header');
+  if (sidebarHeader) {
+    sidebarHeader.style.cursor = 'pointer';
+    sidebarHeader.addEventListener('click', () => loadContent(0));
+  }
+
+  try {
+    initNav();
+    
+    // Setup remaining listeners
+    prevBtn.addEventListener('click', () => loadContent(currentChapterIndex - 1));
+    nextBtn.addEventListener('click', () => loadContent(currentChapterIndex + 1));
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    loadContent(0).catch(err => {
+      console.error('Initial load failed:', err);
+      markdownContentEl.innerHTML = `<div class="error">初始化失敗: ${err.message}</div>`;
+    });
+  } catch (err) {
+    console.error('Initialization error:', err);
+  }
+});
+
+function updateNavButtons() {
+  if (prevBtn) prevBtn.disabled = currentChapterIndex === 0;
+  if (nextBtn) nextBtn.disabled = currentChapterIndex === chapters.length - 1;
+}

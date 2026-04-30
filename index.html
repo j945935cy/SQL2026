@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 現代 SQL 全書</title>
-    <meta name="description" content="適合初學者的 SQLite 完整學習指南，從零開始掌握 SQL 查詢、關聯與管理。">
+    <title>2026 現代 SQL 全書 | 從零開始的 SQLite 學習指南</title>
+    <meta name="description" content="適合初學者的 SQLite 完整學習指南，從零開始掌握 SQL 查詢、關聯與管理。由 Happy eBook 出版。">
+    
+    <!-- SEO & Open Graph Tags -->
+    <meta property="og:title" content="2026 現代 SQL 全書">
+    <meta property="og:description" content="從零開始掌握 SQLite，最適合初學者的 SQL 學習指南。">
+    <meta property="og:type" content="book">
+    <meta property="og:image" content="/cover1.png">
+    <meta name="twitter:card" content="summary_large_image">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
@@ -41,6 +49,9 @@
                 <div class="header-actions">
                     <button id="theme-toggle" title="主題切換">切換主題</button>
                 </div>
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
             </header>
             <article id="markdown-content" class="markdown-body">
                 <!-- Content will be rendered here -->
@@ -55,6 +66,6 @@
             </footer>
         </main>
     </div>
-    <script type="module" src="/main.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>

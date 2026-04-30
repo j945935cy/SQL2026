@@ -10,6 +10,7 @@
   --transition-speed: 0.3s;
   --sidebar-width: 280px;
   --glass-effect: blur(20px) saturate(180%);
+  --progress-height: 4px;
 }
 
 [data-theme="dark"] {
@@ -138,6 +139,22 @@ body {
   top: 0;
   z-index: 90;
   border-bottom: 1px solid var(--border-color);
+}
+
+.progress-container {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: var(--progress-height);
+  background: transparent;
+}
+
+#progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary-color), #00c6ff);
+  width: 0%;
+  transition: width 0.1s linear;
 }
 
 [data-theme="dark"] .content-header {
@@ -366,4 +383,22 @@ body {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 113, 227, 0.2);
   text-decoration: none !important;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
