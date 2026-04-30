@@ -12,10 +12,20 @@ const marked = new Marked(
   })
 );
 
-// Add custom renderer to fix image paths
+// Add custom renderer to handle {#id} in headers and fix image paths
 marked.use({
   renderer: {
+    heading({ text, depth }) {
+      // Regex to match {#id} at the end of the text
+      const idMatch = text.match(/\{#(.*)\}/);
+      const id = idMatch ? idMatch[1] : null;
+      const cleanText = idMatch ? text.replace(idMatch[0], '').trim() : text;
+      
+      const idAttr = id ? ` id="${id}"` : '';
+      return `<h${depth}${idAttr}>${cleanText}</h${depth}>`;
+    },
     image({ href, title, text }) {
+
       const fixedHref = href ? href.replace('../images/', 'images/') : '';
       return `<img src="${fixedHref}" alt="${text || ''}" title="${title || ''}" style="max-width:100%; border-radius:12px; margin: 1rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">`;
     }
