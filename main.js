@@ -1,7 +1,6 @@
-import { Marked } from 'marked';
-import { markedHighlight } from "marked-highlight";
-import hljs from 'highlight.js';
-import 'highlight.js/styles/github-dark.css';
+import { Marked } from 'https://esm.sh/marked';
+import { markedHighlight } from "https://esm.sh/marked-highlight";
+import hljs from 'https://esm.sh/highlight.js';
 
 const marked = new Marked(
   markedHighlight({
