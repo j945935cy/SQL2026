@@ -207,6 +207,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function updateNavButtons() {
-  if (prevBtn) prevBtn.disabled = currentChapterIndex === 0;
-  if (nextBtn) nextBtn.disabled = currentChapterIndex === chapters.length - 1;
+  if (prevBtn) {
+    const prevIdx = currentChapterIndex - 1;
+    prevBtn.disabled = currentChapterIndex === 0;
+    if (currentChapterIndex > 0) {
+      prevBtn.innerHTML = `← 上一章：${chapters[prevIdx].title}`;
+    } else {
+      prevBtn.innerHTML = `← 上一章`;
+    }
+  }
+  
+  if (nextBtn) {
+    const nextIdx = currentChapterIndex + 1;
+    nextBtn.disabled = currentChapterIndex === chapters.length - 1;
+    if (currentChapterIndex < chapters.length - 1) {
+      nextBtn.innerHTML = `下一章：${chapters[nextIdx].title} →`;
+    } else {
+      nextBtn.innerHTML = `下一章 →`;
+    }
+  }
 }
