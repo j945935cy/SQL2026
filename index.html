@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 現代 SQL 全書</title>
+    <meta name="description" content="適合初學者的 SQLite 完整學習指南，從零開始掌握 SQL 查詢、關聯與管理。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div id="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>SQL 2026</h1>
+                <p>現代 SQL 全書</p>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <h3>電子書章節</h3>
+                    <ul id="chapter-list">
+                        <!-- Chapters will be injected here -->
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h3>其他資源</h3>
+                    <ul id="resource-list">
+                        <li><a href="#" data-path="cheatsheet.md">速查表 Cheat Sheet</a></li>
+                        <li><a href="#" data-path="exercises/練習題-初級.md">練習題（初級）</a></li>
+                        <li><a href="#" data-path="exercises/練習題-中級.md">練習題（中級）</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+        
+        <main class="content-area">
+            <header class="content-header">
+                <button id="menu-toggle" class="mobile-only">☰</button>
+                <div id="current-title">歡迎閱讀</div>
+                <div class="header-actions">
+                    <button id="theme-toggle">🌓</button>
+                </div>
+            </header>
+            <article id="markdown-content" class="markdown-body">
+                <!-- Content will be rendered here -->
+                <div class="loading-state">正在準備內容...</div>
+            </article>
+            <footer class="content-footer">
+                <div class="nav-buttons">
+                    <button id="prev-btn" class="nav-btn">← 上一章</button>
+                    <button id="next-btn" class="nav-btn">下一章 →</button>
+                </div>
+                <p>&copy; 2026 SQL2026. Built with Antigravity.</p>
+            </footer>
+        </main>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
