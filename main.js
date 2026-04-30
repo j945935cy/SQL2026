@@ -75,26 +75,31 @@ function initNav() {
     });
   });
 
-  // Handle Internal Links within Markdown
   markdownContentEl.addEventListener('click', (e) => {
     const link = e.target.closest('a');
     if (link) {
       const href = link.getAttribute('href');
-      if (href && href.endsWith('.md')) {
+      // 支援帶有錨點的 .md 連結，例如 ../exercises/答案.md#ch01
+      if (href && (href.includes('.md#') || href.endsWith('.md'))) {
         e.preventDefault();
-        // Try to find if it's a chapter
-        const filename = decodeURIComponent(href.split('/').pop());
-        const index = chapters.findIndex(ch => {
-          const chFilename = ch.path.split('/').pop();
-          return chFilename === filename;
-        });
+        
+        // 移除路徑中的 ../ 並分離檔案名與錨點
+        const cleanPath = href.replace('../', '');
+        const [filePath, hash] = cleanPath.split('#');
+        
+        // 嘗試匹配是否為章節
+        const index = chapters.findIndex(ch => ch.path === filePath || ch.path.endsWith(filePath));
         
         if (index !== -1) {
           loadContent(index);
         } else {
-          // If it's a resource like cheatsheet.md
-          const resourcePath = href.includes('exercises') ? `exercises/${filename}` : filename;
-          fetchAndRender(resourcePath, link.textContent);
+          // 如果是資源文件（如練習題或速查表）
+          fetchAndRender(filePath, link.textContent).then(() => {
+            if (hash) {
+              const targetEl = document.getElementById(decodeURIComponent(hash));
+              if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
         }
       }
     }
