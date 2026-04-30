@@ -273,6 +273,4 @@ JOIN orders o ON c.customer_id = o.customer_id;
 
 → [查看答案](../exercises/答案-中級.md#第06章)
 
----
 
-**[← 上一章：聚合函數與分組](05-聚合函數與分組.md)**　｜　**[下一章：子查詢 →](07-子查詢.md)**
